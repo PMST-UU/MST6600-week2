@@ -1,0 +1,65 @@
+---
+title: "Discussion for Week 2"
+output: html_notebook
+---
+## Built in data sets
+
+R includes many built-in datasets. We saw this with the **MPG** and **diamods** datasets that are used in the *R for Data Science* book.
+
+You can see all the datasets in the **The R Datasets Package** with the following command:
+
+```{r datasets, echo=TRUE}
+data()
+```
+
+Often, other packages will include their own datasets.
+
+For example, the textbook *Data Analysis and Graphics Using R* has a number of datasets and we can look those in the packages **DAAG** and **MASS** used in their textbook using the following command:
+
+```{r echo=TRUE}
+data(package = "DAAG")
+data(package = "MASS")
+```
+
+Lots of data to work with... If you're tring to find information about a particular type of analysis, someone has probaly already worked out many of the details. (Of course, it may not use the most recent additions to R (i.e. the **tidyverrse** package, but it can be a good place to start.))
+
+***
+## How do I view the data?
+
+There are two ways to view data: using the View() function, just typing the name of the dataset into the console window.
+
+```{r}
+library("DAAG")
+View(greatLakes) # requires library("DAAG")
+greatLakes
+```
+
+This is a timeseries dataset (more on that later). We can try to convert it to a tibble (data frame) using the as.tibble() function
+
+```{r convert to a table}
+gL <- as.tibble(greatLakes)
+gL
+```
+
+We see that we've lost the year information (this was automatically generated in the time series data set... so we'd want to add that back at somepoint)
+
+```{r histogram of Lake Erie}
+ggplot(data = gL) +
+  geom_histogram(mapping = aes(Erie), bins = 50)
+```
+
+If I want info on the dataset, I use the following command:
+```{r info on greatLakes}
+?greatLakes
+```
+
+
+As much a I like ggplot(), if I want to look at TS data, I'll need to use the base graphics plot()
+```{r plot of greatLakes data}
+plot(greatLakes)
+```
+
+***
+
+
+

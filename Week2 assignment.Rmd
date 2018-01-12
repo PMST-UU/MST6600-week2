@@ -1,0 +1,97 @@
+---
+title: "Week 2---Assignment"
+output: html_notebook
+---
+
+# Recreate a graphic based on the readings from Chapter 3
+
+This asignment asked you to reproduce one of the plots from the *Exercies 3.6.1* in **R for Data Science** 
+
+Each of these charts is shown below. There may be other ways to recreate the graphics. 
+
+## Required Packages
+```{r Required Packages, echo=TRUE}
+library(tidyverse)
+```
+
+
+## Graph 1---Top Left
+
+Starting with the top left graphic:
+
+```{r Graph1a-Top Left}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y = hwy), size = 4) +
+  geom_smooth(mapping = aes(x= displ, y = hwy), size = 2, se = FALSE)
+```
+
+The main changes in this graphic are the changes to the default size of the datapoints and the width of the line. 
+
+I can reduce the amount of typing by including the file information in the ggplot() function.
+
+```{r Graph 1b-Top Left}
+# This can be simplified by mapping the aestheitcs in the ggplot()
+
+ggplot(data = mpg, mapping = aes(x= displ, y = hwy)) +
+  geom_point(size = 4) +
+  geom_smooth(size = 2, se = FALSE)
+```
+
+***
+
+## Graph 2---Top Right
+
+The second graph shows the a regresion of the data by some factor (three of them)
+Drivetrain (drv) was used earlier in the document and matches the desired output.
+
+```{r Graph 2-Top Right}
+ggplot(data = mpg, mapping = aes(x= displ, y = hwy)) +
+  geom_point(size = 4) +
+  geom_smooth(mapping = aes(group = drv), size = 2, se = FALSE)
+```
+
+***
+## Graph 3---Middle Left
+
+The middle left plot adds color to All the data colored by drivetrain:
+
+```{r Graph3--Middle Left}
+ggplot(data = mpg, mapping = aes(x= displ, y = hwy, colour = drv)) +
+  geom_point(size = 4) +
+  geom_smooth(mapping = aes(group = drv), size = 2, se = FALSE)
+```
+
+***
+
+## Grah 4---Middle Right
+
+If I want to only color the data points, I need to move the aes() back to the gopm_point() and geom_smooth() positions.
+
+```{r Graph4-Middle Right}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y = hwy, colour = drv), size = 4) +
+  geom_smooth(mapping = aes(x= displ, y = hwy), size = 2, se = FALSE)
+```
+
+***
+## Graph 5---Bottom Left
+
+The bottom left requires we assign a *linetype* to each of the groups.
+
+```{r Graph5-Bottom Left}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x= displ, y = hwy, colour = drv), size = 4) +
+  geom_smooth(mapping = aes(x= displ, y = hwy, linetype = drv), size = 2, se = FALSE)
+```
+
+***
+## Graph 6---Bottom Right
+
+I constructed the final graph by layering two sets of points using geom_point(). It looks to be plotting the colored points over a larger white point.
+
+```{r Graph6-Bottom Right}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), colour = "white", size = 8) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = drv), size = 4)
+```
+
